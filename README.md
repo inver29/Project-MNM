@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/27902285/README.md)
 # Nội Thất Mộc Việt
 
 Project web cuối kỳ được xây dựng theo mô hình:
@@ -41,7 +40,7 @@ CREATE DATABASE cua_hang_noi_that_db;
 ### 3. Chạy backend
 
 cd backend
-python -m venv .venv
+python3 -m venv .venv
 copy .env.example .env
 source .venv/bin/activate
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt

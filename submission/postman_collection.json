@@ -1,0 +1,560 @@
+{
+  "info": {
+    "name": "API Noi That Moc Viet",
+    "_postman_id": "1f82e0de-6c4d-4f8d-ae8e-7ad6c6e0f001",
+    "description": "Collection test RESTful API cho do an cuoi ky Noi That Moc Viet. Collection tach rieng luong user va admin de demo dung quyen truy cap.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000/api/v1"
+    },
+    {
+      "key": "userEmail",
+      "value": "demo.postman@example.com"
+    },
+    {
+      "key": "userPassword",
+      "value": "Secret123"
+    },
+    {
+      "key": "adminEmail",
+      "value": "admin@cuahangnoithat.com"
+    },
+    {
+      "key": "adminPassword",
+      "value": "Admin@12345"
+    },
+    {
+      "key": "userToken",
+      "value": ""
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "managedEmail",
+      "value": "managed.account@example.com"
+    },
+    {
+      "key": "managedAccountId",
+      "value": ""
+    },
+    {
+      "key": "cancelOrderId",
+      "value": ""
+    },
+    {
+      "key": "deliveryOrderId",
+      "value": ""
+    },
+    {
+      "key": "itemSlug",
+      "value": "sofa-da-milano-1"
+    },
+    {
+      "key": "sampleImagePath",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('userEmail', `demo.postman+${Date.now()}@example.com`);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_address\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\",\n  \"display_name\": \"Demo Postman\",\n  \"mobile_phone\": \"0901234567\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/register"
+          }
+        },
+        {
+          "name": "User Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('userToken', json.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_address\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "User Get Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/me"
+          }
+        },
+        {
+          "name": "Admin Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('adminToken', json.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_address\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Admin Get Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Catalog",
+      "item": [
+        {
+          "name": "List Spaces",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/spaces"
+          }
+        },
+        {
+          "name": "List Items",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/items"
+          }
+        },
+        {
+          "name": "Get Item By Slug",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/items/by-slug/{{itemSlug}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Accounts",
+      "item": [
+        {
+          "name": "Create Managed Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('managedEmail', `managed.account+${Date.now()}@example.com`);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('managedAccountId', json.account_id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_address\": \"{{managedEmail}}\",\n  \"password\": \"Admin@12345\",\n  \"display_name\": \"Managed Account\",\n  \"mobile_phone\": \"0901234568\",\n  \"account_role\": \"nhan_vien\",\n  \"is_active\": true\n}"
+            },
+            "url": "{{baseUrl}}/accounts"
+          }
+        },
+        {
+          "name": "List Accounts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/accounts"
+          }
+        },
+        {
+          "name": "Get Managed Account",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/accounts/{{managedAccountId}}"
+          }
+        },
+        {
+          "name": "Update Managed Account",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_address\": \"{{managedEmail}}\",\n  \"display_name\": \"Managed Account Updated\",\n  \"mobile_phone\": \"0901234569\",\n  \"account_role\": \"nhan_vien\",\n  \"is_active\": true\n}"
+            },
+            "url": "{{baseUrl}}/accounts/{{managedAccountId}}"
+          }
+        },
+        {
+          "name": "Delete Managed Account",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/accounts/{{managedAccountId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders - Cancel Flow",
+      "item": [
+        {
+          "name": "Create Order For Cancel",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('cancelOrderId', json.sales_order_id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"consignee_name\": \"Demo Postman\",\n  \"consignee_phone\": \"0901234567\",\n  \"delivery_line\": \"10 Nguyen Hue, Quan 1\",\n  \"delivery_note\": \"Giao gio hanh chinh\",\n  \"payment_method\": \"tien_mat\",\n  \"items\": [\n    {\n      \"item_id\": 1,\n      \"requested_qty\": 1\n    }\n  ]\n}"
+            },
+            "url": "{{baseUrl}}/orders"
+          }
+        },
+        {
+          "name": "Get Cancel Order Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/orders/{{cancelOrderId}}"
+          }
+        },
+        {
+          "name": "Cancel My Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/orders/{{cancelOrderId}}/cancel"
+          }
+        },
+        {
+          "name": "Admin Delete Cancelled Order",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/orders/{{cancelOrderId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders - Delivery Flow",
+      "item": [
+        {
+          "name": "Create Order For Delivery",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('deliveryOrderId', json.sales_order_id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"consignee_name\": \"Demo Postman\",\n  \"consignee_phone\": \"0901234567\",\n  \"delivery_line\": \"10 Nguyen Hue, Quan 1\",\n  \"delivery_note\": \"Giao gio hanh chinh\",\n  \"payment_method\": \"tien_mat\",\n  \"items\": [\n    {\n      \"item_id\": 1,\n      \"requested_qty\": 1\n    }\n  ]\n}"
+            },
+            "url": "{{baseUrl}}/orders"
+          }
+        },
+        {
+          "name": "Admin Confirm Order",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order_status\": \"da_xac_nhan\"\n}"
+            },
+            "url": "{{baseUrl}}/orders/{{deliveryOrderId}}/status"
+          }
+        },
+        {
+          "name": "Admin Start Delivery",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order_status\": \"dang_giao\"\n}"
+            },
+            "url": "{{baseUrl}}/orders/{{deliveryOrderId}}/status"
+          }
+        },
+        {
+          "name": "User Confirm Received",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/orders/{{deliveryOrderId}}/confirm-received"
+          }
+        },
+        {
+          "name": "Get Delivery Order Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/orders/{{deliveryOrderId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Uploads",
+      "item": [
+        {
+          "name": "Upload Product Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "{{sampleImagePath}}"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/uploads/product-image"
+          }
+        },
+        {
+          "name": "Upload Space Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "{{sampleImagePath}}"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/uploads/space-image"
+          }
+        }
+      ]
+    }
+  ]
+}

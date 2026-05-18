@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/27899880/README.md)
 # Nội Thất Mộc Việt
 
 Project web cuối kỳ được xây dựng theo mô hình:

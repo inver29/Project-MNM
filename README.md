@@ -45,8 +45,8 @@ Cần cài đặt sẵn các công cụ sau trước khi chạy project:
 
 ### 1. Tạo database
 
-Tạo database với tên `cua_hang_noi_that_db`.
-Mật khẩu PostgreSQL mặc định được cấu hình là `2906`. Nếu sử dụng mật khẩu khác, cần chỉnh lại biến `DATABASE_URL` trong file `backend/.env`.
+- Tạo database với tên `cua_hang_noi_that_db`.
+- Mật khẩu PostgreSQL mặc định được cấu hình là `2906`. Nếu sử dụng mật khẩu khác, cần chỉnh lại biến `DATABASE_URL` trong file `backend/.env`.
 
 ### 2. Nhập dữ liệu database bằng file .backup
 
@@ -61,23 +61,23 @@ Mật khẩu PostgreSQL mặc định được cấu hình là `2906`. Nếu s�
 
 ### 3. Chạy backend
 
-cd backend
-python3 -m venv .venv
-copy .env.example .env `hoặc` cp .env.example .env
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+- cd backend
+- python3 -m venv .venv
+- copy .env.example .env `hoặc` cp .env.example .env
+- source .venv/bin/activate
+- pip install -r requirements.txt
+- uvicorn app.main:app --reload
 
-API docs: `http://127.0.0.1:8000/docs`.
+- API docs: `http://127.0.0.1:8000/docs`.
 
 ### 4. Chạy frontend
 
-cd frontend
-copy .env.example .env
-bun install
-bun run dev
+- cd frontend
+- copy .env.example .env
+- bun install
+- bun run dev
 
-Frontend dev server được cấu hình mặc định tại `http://localhost:8080`.
+- Frontend dev server được cấu hình mặc định tại `http://localhost:8080`.
 
 ### 5. Tài khoản mặc định
 

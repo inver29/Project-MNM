@@ -68,7 +68,7 @@ Cần cài đặt sẵn các công cụ sau trước khi chạy project:
 - pip install -r requirements.txt
 - uvicorn app.main:app --reload
 
-- API docs: `http://127.0.0.1:8000/docs`.
+API docs: `http://127.0.0.1:8000/docs`.
 
 ### 4. Chạy frontend
 
@@ -77,7 +77,7 @@ Cần cài đặt sẵn các công cụ sau trước khi chạy project:
 - bun install
 - bun run dev
 
-- Frontend dev server được cấu hình mặc định tại `http://localhost:8080`.
+Frontend dev server được cấu hình mặc định tại `http://localhost:8080`.
 
 ### 5. Tài khoản mặc định
 

@@ -38,8 +38,8 @@ Cần cài đặt sẵn các công cụ sau trước khi chạy project:
 - docker compose version
 
 ## Clone project
-git clone <repository_url>
-cd <project_folder>
+- git clone <repository_url>
+- cd <project_folder>
 
 ## Chạy local với PostgreSQL
 
